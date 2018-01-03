@@ -22,7 +22,7 @@ services:
     networks:
       - treinadockernet
   jenkins:
-    image: jenkinsci/jenkins:2.46.1-alpine
+    image: jenkinsci/jenkins:alpine
     hostname: jenkins
     environment:
       - JAVA_OPTS=-Dhudson.model.ParametersAction.keepUndefinedParameters=true
