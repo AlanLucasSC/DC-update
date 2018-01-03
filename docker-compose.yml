@@ -1,0 +1,40 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:5
+    hostname: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=senha123
+    networks:
+      - treinadockernet
+  myadmin:
+    image: phpmyadmin/phpmyadmin
+    hostname: myadmin
+    ports:
+      - "80:80"
+    environment:
+      - PMA_ARBITRARY=1
+      - MYSQL_ROOT_PASSWORD=senha123
+    depends_on:
+      - mysql
+    networks:
+      - treinadockernet
+  jenkins:
+    image: jenkinsci/jenkins:2.46.1-alpine
+    hostname: jenkins
+    environment:
+      - JAVA_OPTS=-Dhudson.model.ParametersAction.keepUndefinedParameters=true
+    ports:
+      - "8080:8080"
+    volumes:
+      - jenkins-data:/var/jenkins_home
+    networks:
+      - treinadockernet
+
+volumes:
+  jenkins-data:
+
+networks:
+  treinadockernet:
